@@ -2,8 +2,10 @@ package com.retrofitassignment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,20 +17,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
-
-    private AlbumAdapter adapter;
+public class CustomPicture extends AppCompatActivity {
+    private PictureAdapter adapter;
     private RecyclerView recyclerView;
-    ProgressDialog progressDoalog;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_custompicture);
 
-        progressDoalog = new ProgressDialog(MainActivity.this);
-        progressDoalog.setMessage("Loading....");
-        progressDoalog.show();
+        String albumName = getIntent().getStringExtra("albumName");
+
+        progressDialog = new ProgressDialog(CustomPicture.this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
 
         RetrofitClientInstance.GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(RetrofitClientInstance.GetDataService.class);
 
@@ -37,29 +40,31 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<List<RetroPhoto>> call, Response<List<RetroPhoto>> response) {
-                progressDoalog.dismiss();
+                progressDialog.dismiss();
                 ArrayList<RetroPhoto> photoList = new ArrayList<>();
-
                 assert response.body() != null;
                 for (RetroPhoto item: response.body()) {
-                    if (photoList.size() == 0 || !photoList.get(photoList.size() - 1).getAlbumId().equals(item.getAlbumId()))
-                    photoList.add(item);
+                    if (albumName.equals(item.getAlbumId())) {
+                        photoList.add(item);
+                    }
                 }
+
                 generateDataList(photoList);
             }
 
             @Override
             public void onFailure(Call<List<RetroPhoto>> call, Throwable t) {
-                progressDoalog.dismiss();
-                Toast.makeText(MainActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                Toast.makeText(CustomPicture.this, "Error!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+
     private void generateDataList(List<RetroPhoto> photoList) {
-        recyclerView = findViewById(R.id.customRecyclerView);
-        adapter = new AlbumAdapter(this,photoList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView = findViewById(R.id.customRecyclerView1);
+        adapter = new PictureAdapter(this,photoList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CustomPicture.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
