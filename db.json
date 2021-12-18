@@ -1,0 +1,33 @@
+{
+  "1":
+    {
+      "id": 1,
+      "title": "post1",
+      "comments" : {
+        "1": {
+          "sender": "Hoang",
+          "content": "Good"
+        },
+        "2": {
+          "sender": "Not Hoang",
+          "content": "Not good"
+        }
+      }
+    },
+  "2": 
+    {
+      "id": 2,
+      "title": "post2",
+      "comments" : {
+        "1": {
+          "sender": "Hoang",
+          "content": "Not good"
+        },
+        "2": {
+          "sender": "Not Hoang",
+          "content": "Good"
+        }
+      }
+    }
+  
+}
