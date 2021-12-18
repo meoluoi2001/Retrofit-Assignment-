@@ -1,9 +1,9 @@
-[
+{
   "1":
     {
       "id": 1,
       "title": "post1",
-      "comments" : [
+      "comments" : {
         "1": {
           "sender": "Hoang",
           "content": "Good"
@@ -12,13 +12,13 @@
           "sender": "Not Hoang",
           "content": "Not good"
         }
-      ]
+      }
     },
   "2": 
     {
       "id": 2,
       "title": "post2",
-      "comments" : [
+      "comments" : {
         "1": {
           "sender": "Hoang",
           "content": "Not good"
@@ -27,6 +27,6 @@
           "sender": "Not Hoang",
           "content": "Good"
         }
-      ]
+      }
     }
- ]
+}
